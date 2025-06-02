@@ -28,11 +28,11 @@ function App() {
                 />
                 <Route
                     path="/"
-                    element={
+                    element={(
                         <ProtectedRoute>
                             <Layout />
                         </ProtectedRoute>
-                    }
+                    )}
                 >
                     <Route index element={<Navigate to="/home" replace />} />
                     <Route path="home" element={<Home />} />

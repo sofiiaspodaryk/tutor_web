@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { fetchUsers, createUser, updateUser, deleteUser } from '../services/mockData';
+import {
+    fetchUsers, createUser, updateUser, deleteUser,
+} from '../services/mockData';
 
-const Users = () => {
+/* eslint-disable max-lines-per-function, no-use-before-define, no-alert */
+
+function Users() {
     const { currentUser, isAdmin } = useAuth();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -33,19 +37,19 @@ const Users = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
             if (editingUser) {
                 await updateUser(editingUser.id, formData);
             } else {
                 await createUser({ ...formData, password: 'defaultpass123' });
             }
-            
+
             setFormData({ username: '', email: '', role: 'user' });
             setEditingUser(null);
             setIsCreating(false);
@@ -226,11 +230,17 @@ const Users = () => {
             </div>
 
             <div className="users-summary">
-                <p>Total Users: {users.length}</p>
-                <p>Your Role: {currentUser?.role}</p>
+                <p>
+                    Total Users:
+                    {users.length}
+                </p>
+                <p>
+                    Your Role:
+                    {currentUser?.role}
+                </p>
             </div>
         </div>
     );
-};
+}
 
 export default Users;

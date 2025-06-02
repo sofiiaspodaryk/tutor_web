@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const Header = () => {
+function Header() {
     const { currentUser, logout } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -40,7 +40,9 @@ const Header = () => {
                             {currentUser?.username}
                         </span>
                         <span className="user-role">
-                            ({currentUser?.role})
+                            (
+                            {currentUser?.role}
+                            )
                         </span>
                     </div>
                     <button
@@ -54,6 +56,6 @@ const Header = () => {
             </div>
         </header>
     );
-};
+}
 
 export default Header;

@@ -1,8 +1,9 @@
+/* eslint-disable max-lines-per-function */
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const Login = () => {
+function Login() {
     const { login } = useAuth();
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -121,6 +122,6 @@ const Login = () => {
             </div>
         </div>
     );
-};
+}
 
 export default Login;

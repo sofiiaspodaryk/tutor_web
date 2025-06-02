@@ -50,43 +50,51 @@ export const mockUsers = [
 // Mock API functions
 export const fetchUsers = async () => {
     // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await new Promise((resolve) => {
+        setTimeout(resolve, 300);
+    });
     return mockUsers.map(({ password, ...user }) => user); // Don't return passwords
 };
 
 export const createUser = async (userData) => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    
+    await new Promise((resolve) => {
+        setTimeout(resolve, 500);
+    });
+
     const newUser = {
         id: Date.now(),
         ...userData,
         createdAt: new Date().toISOString(),
     };
-    
+
     mockUsers.push(newUser);
     return newUser;
 };
 
 export const updateUser = async (id, userData) => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    
+    await new Promise((resolve) => {
+        setTimeout(resolve, 500);
+    });
+
     const userIndex = mockUsers.findIndex((user) => user.id === id);
     if (userIndex === -1) {
         throw new Error('User not found');
     }
-    
+
     mockUsers[userIndex] = { ...mockUsers[userIndex], ...userData };
     return mockUsers[userIndex];
 };
 
 export const deleteUser = async (id) => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    
+    await new Promise((resolve) => {
+        setTimeout(resolve, 500);
+    });
+
     const userIndex = mockUsers.findIndex((user) => user.id === id);
     if (userIndex === -1) {
         throw new Error('User not found');
     }
-    
+
     const deletedUser = mockUsers.splice(userIndex, 1)[0];
     return deletedUser;
 };

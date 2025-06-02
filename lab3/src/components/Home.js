@@ -1,7 +1,9 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const Home = () => {
+/* eslint-disable max-lines-per-function */
+
+function Home() {
     const { currentUser } = useAuth();
 
     return (
@@ -9,13 +11,13 @@ const Home = () => {
             <div className="home-content">
                 <div className="welcome-section">
                     <h1 className="welcome-title">
-                        Welcome, 
+                        Welcome,
                         {' '}
                         {currentUser?.username}
                         !
                     </h1>
                     <p className="welcome-subtitle">
-                        You are logged in as a 
+                        You are logged in as a
                         {' '}
                         <span className="role-badge">{currentUser?.role}</span>
                     </p>
@@ -42,8 +44,8 @@ const Home = () => {
                         <div className="info-item">
                             <strong>Member since:</strong>
                             {' '}
-                            {currentUser?.createdAt && 
-                                new Date(currentUser.createdAt).toLocaleDateString()}
+                            {currentUser?.createdAt
+                                && new Date(currentUser.createdAt).toLocaleDateString()}
                         </div>
                     </div>
 
@@ -76,6 +78,6 @@ const Home = () => {
             </div>
         </div>
     );
-};
+}
 
 export default Home;

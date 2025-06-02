@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, {
+    createContext, useContext, useState, useEffect, useMemo,
+} from 'react';
 import { mockUsers, ROLES } from '../services/mockData';
 
 const AuthContext = createContext();
@@ -11,7 +13,7 @@ export const useAuth = () => {
     return context;
 };
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -33,9 +35,11 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (credentials) => {
         const { username, password } = credentials;
-        
+
         // Simulate API call delay
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => {
+            setTimeout(resolve, 500);
+        });
 
         // Find user in mock data
         const user = mockUsers.find(
@@ -68,10 +72,14 @@ export const AuthProvider = ({ children }) => {
     };
 
     const register = async (userData) => {
-        const { username, password, email, role = ROLES.USER } = userData;
+        const {
+            username, password, email, role = ROLES.USER,
+        } = userData;
 
         // Simulate API call delay
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => {
+            setTimeout(resolve, 500);
+        });
 
         // Check if username already exists
         const existingUser = mockUsers.find(
@@ -105,7 +113,7 @@ export const AuthProvider = ({ children }) => {
 
     const isAdmin = () => hasRole(ROLES.ADMIN);
 
-    const value = {
+    const value = useMemo(() => ({
         currentUser,
         isAuthenticated,
         isLoading,
@@ -114,11 +122,11 @@ export const AuthProvider = ({ children }) => {
         register,
         hasRole,
         isAdmin,
-    };
+    }), [currentUser, isAuthenticated, isLoading]);
 
     return (
         <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );
-};
+}

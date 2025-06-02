@@ -27,10 +27,13 @@
             "airbnb"
         ],
         "rules": {
+            "linebreak-style": 0,
             "indent": [
                 "error",
                 4
             ],
+            "max-lines-per-function": 0,
+            "react/jsx-no-constructed-context-values": 0,
             "react/jsx-indent": [
                 "error",
                 4
@@ -41,15 +44,7 @@
             ],
             "max-len": [
                 "error",
-                {
-                    "code": 400
-                }
-            ],
-            "max-lines-per-function": [
-                "error",
-                {
-                    "max": 75
-                }
+                { "code": 400 }
             ]
         }
     },

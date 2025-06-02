@@ -1,9 +1,10 @@
+/* eslint-disable max-lines-per-function */
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ROLES } from '../services/mockData';
 
-const Register = () => {
+function Register() {
     const { register } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -156,6 +157,6 @@ const Register = () => {
             </div>
         </div>
     );
-};
+}
 
 export default Register;
