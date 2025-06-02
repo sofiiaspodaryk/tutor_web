@@ -1,0 +1,16 @@
+{
+  "name": "websocket-demo",
+  "version": "1.0.0",
+  "description": "A simple WebSocket demo project for real-time communication.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "ws": "^8.18.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

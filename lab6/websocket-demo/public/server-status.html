@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Server Status</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .status-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .online {
+            background-color: #27ae60;
+        }
+        .offline {
+            background-color: #e74c3c;
+        }
+        .status-text {
+            font-size: 18px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+        .details {
+            margin-top: 20px;
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4a69bd;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-card">
+        <h1>WebSocket Server Status</h1>
+        <div>
+            <span id="statusIndicator" class="status-indicator offline"></span>
+            <span id="statusText" class="status-text">Checking...</span>
+        </div>
+        <div class="details" id="details">
+            <p>Server URL: ws://localhost:8082</p>
+            <p id="clientCount">Connected clients: --</p>
+            <p id="uptime">Uptime: --</p>
+        </div>
+        <a href="index.html" class="button">Open Chat Application</a>
+    </div>
+
+    <script>
+        // Check server status
+        function checkStatus() {
+            const ws = new WebSocket('ws://localhost:8082');
+            
+            ws.addEventListener('open', function(event) {
+                document.getElementById('statusIndicator').classList.remove('offline');
+                document.getElementById('statusIndicator').classList.add('online');
+                document.getElementById('statusText').textContent = 'Online';
+                
+                // Request server info
+                ws.send(JSON.stringify({
+                    type: 'status_request',
+                    content: 'Requesting server status',
+                    sender: 'StatusPage',
+                    timestamp: new Date().toISOString()
+                }));
+                
+                // Close after 2 seconds
+                setTimeout(() => {
+                    ws.close();
+                }, 2000);
+            });
+            
+            ws.addEventListener('message', function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    console.log('Received:', data);
+                } catch (e) {
+                    console.error('Error parsing message:', e);
+                }
+            });
+            
+            ws.addEventListener('error', function(event) {
+                document.getElementById('statusIndicator').classList.remove('online');
+                document.getElementById('statusIndicator').classList.add('offline');
+                document.getElementById('statusText').textContent = 'Offline';
+                document.getElementById('details').innerHTML = '<p>The WebSocket server is not running or cannot be reached.</p><p>Please start the server with:</p><pre>node server/server.js</pre>';
+            });
+        }
+        
+        // Check status immediately and every 5 seconds
+        checkStatus();
+        setInterval(checkStatus, 5000);
+    </script>
+</body>
+</html>
