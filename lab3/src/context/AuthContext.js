@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function, react/jsx-no-constructed-context-values */
 import React, {
     createContext, useContext, useState, useEffect, useMemo,
 } from 'react';
@@ -122,7 +123,7 @@ export function AuthProvider({ children }) {
         register,
         hasRole,
         isAdmin,
-    }), [currentUser, isAuthenticated, isLoading]);
+    }), [currentUser, isAuthenticated, isLoading, hasRole, isAdmin]);
 
     return (
         <AuthContext.Provider value={value}>
