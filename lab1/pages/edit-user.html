@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Edit User Screen">
+    <title>Formula of Success - Edit User</title>
+    <link rel="stylesheet" href="../public/css/main.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="user-list.html">Users</a></li>
+                <li><a href="create-user.html">Create User</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero" style="max-width:500px; margin:0 auto;">
+            <h1>Edit User</h1>
+            <!-- Статична форма редагування -->
+            <form>
+                <label for="username" style="display:block; margin-bottom:0.5rem;">Username</label>
+                <input type="text" id="username" value="existing_user" required style="width:100%; margin-bottom:1rem;">
+
+                <label for="role" style="display:block; margin-bottom:0.5rem;">Role</label>
+                <select id="role" required style="width:100%; margin-bottom:1rem;">
+                    <option value="admin">Admin</option>
+                    <option value="regular" selected>Regular</option>
+                </select>
+
+                <div style="margin-top:1rem;">
+                    <button type="submit">Save</button>
+                    <button type="button">Cancel</button>
+                </div>
+            </form>
+
+            <!-- Приклад помилок -->
+            <div class="error-notification" style="margin-top:1rem; color:red;">
+                <!-- Наприклад: поле не заповнено -->
+                <p>Password cannot be empty!</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Tutoring Center. All rights reserved.</p>
+    </footer>
+</body>
+</html>
