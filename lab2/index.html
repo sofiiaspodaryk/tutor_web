@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 2 - SPA with REST API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #5a67d8;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #5a67d8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .nav-btn:hover {
+            background: #4c51bf;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn.active {
+            background: #2d3748;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        main {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #5a67d8;
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 3px solid #5a67d8;
+            padding-bottom: 10px;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+
+        .controls select {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            min-width: 200px;
+        }
+
+        .data-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .data-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .data-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #5a67d8;
+        }
+
+        .data-item h3,
+        .data-item h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .data-item h3 {
+            font-size: 1.3rem;
+            border-bottom: 2px solid #5a67d8;
+            padding-bottom: 5px;
+        }
+
+        .data-item p {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .user-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .post-item .post-meta {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .post-item .post-body {
+            line-height: 1.7;
+            color: #4a5568;
+        }
+
+        .todo-item.completed {
+            background: #f0fff4;
+            border-color: #48bb78;
+        }
+
+        .todo-item.pending {
+            background: #fffbf0;
+            border-color: #ed8936;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status.completed {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status.pending {
+            background: #fed7aa;
+            color: #7b341e;
+        }
+
+        .error {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e53e3e;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .user-item {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-btn {
+                min-width: 100px;
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>REST API Client SPA</h1>
+            <nav>
+                <button id="users-btn" class="nav-btn active">Users</button>
+                <button id="posts-btn" class="nav-btn">Posts</button>
+                <button id="todos-btn" class="nav-btn">Todos</button>
+            </nav>
+        </header>
+
+        <main>
+            <div class="loading" id="loading">Loading...</div>
+
+            <section id="users-section" class="content-section active">
+                <h2>Users</h2>
+                <div id="users-list" class="data-list"></div>
+            </section>
+
+            <section id="posts-section" class="content-section">
+                <h2>Posts</h2>
+                <div class="controls">
+                    <select id="user-filter">
+                        <option value="">All Users</option>
+                    </select>
+                </div>
+                <div id="posts-list" class="data-list"></div>
+            </section>
+
+            <section id="todos-section" class="content-section">
+                <h2>Todos</h2>
+                <div class="controls">
+                    <select id="todo-filter">
+                        <option value="">All</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                <div id="todos-list" class="data-list"></div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // API Service - handles all REST API calls
+        class ApiService {
+            constructor() {
+                this.baseUrl = 'https://jsonplaceholder.typicode.com';
+            }
+
+            async makeRequest(endpoint) {
+                const url = `${this.baseUrl}${endpoint}`;
+
+                try {
+                    const response = await fetch(url);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    if (error instanceof TypeError) {
+                        throw new Error('Network error: Please check your internet connection');
+                    }
+                    throw error;
+                }
+            }
+
+            async getUsers() {
+                return this.makeRequest('/users');
+            }
+
+            async getPosts() {
+                return this.makeRequest('/posts');
+            }
+
+            async getTodos() {
+                return this.makeRequest('/todos');
+            }
+        }
+
+        // UI Manager - handles all DOM manipulation and rendering
+        class UIManager {
+            constructor() {
+                this.loadingElement = document.getElementById('loading');
+            }
+
+            showLoading() {
+                if (this.loadingElement) {
+                    this.loadingElement.classList.add('show');
+                }
+            }
+
+            hideLoading() {
+                if (this.loadingElement) {
+                    this.loadingElement.classList.remove('show');
+                }
+            }
+
+            showError(message) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error';
+                errorDiv.textContent = message;
+
+                const activeSection = document.querySelector('.content-section.active');
+                if (activeSection) {
+                    activeSection.insertBefore(errorDiv, activeSection.firstChild);
+                    setTimeout(() => {
+                        if (errorDiv.parentNode) {
+                            errorDiv.parentNode.removeChild(errorDiv);
+                        }
+                    }, 5000);
+                }
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            setActiveSection(sectionName) {
+                // Update nav buttons
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.getElementById(`${sectionName}-btn`).classList.add('active');
+
+                // Update sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(`${sectionName}-section`).classList.add('active');
+            }
+
+            renderUsers(users) {
+                const container = document.getElementById('users-list');
+                if (!container) return;
+
+                container.innerHTML = users.map(user => `
+                    <div class="data-item user-item">
+                        <div class="user-info">
+                            <h3>${this.escapeHtml(user.name)}</h3>
+                            <p><strong>Username:</strong> ${this.escapeHtml(user.username)}</p>
+                            <p><strong>Email:</strong> ${this.escapeHtml(user.email)}</p>
+                            <p><strong>Phone:</strong> ${this.escapeHtml(user.phone)}</p>
+                            <p><strong>Website:</strong> ${this.escapeHtml(user.website)}</p>
+                        </div>
+                        <div class="user-contact">
+                            <h4>Address</h4>
+                            <p>${this.escapeHtml(user.address.street)}, ${this.escapeHtml(user.address.suite)}</p>
+                            <p>${this.escapeHtml(user.address.city)}, ${this.escapeHtml(user.address.zipcode)}</p>
+                            <h4>Company</h4>
+                            <p><strong>${this.escapeHtml(user.company.name)}</strong></p>
+                            <p>${this.escapeHtml(user.company.catchPhrase)}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            populateUserFilter(users) {
+                const userFilter = document.getElementById('user-filter');
+                if (!userFilter) return;
+
+                userFilter.innerHTML = '<option value="">All Users</option>';
+                users.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.textContent = user.name;
+                    userFilter.appendChild(option);
+                });
+            }
+
+            renderPosts(posts, users = []) {
+                const container = document.getElementById('posts-list');
+                if (!container) return;
+
+                container.innerHTML = posts.map(post => {
+                    const user = users.find(u => u.id === post.userId);
+                    const userName = user ? user.name : `User ${post.userId}`;
+
+                    return `
+                        <div class="data-item post-item">
+                            <h3>${this.escapeHtml(post.title)}</h3>
+                            <div class="post-meta">
+                                <strong>Author:</strong> ${this.escapeHtml(userName)} | 
+                                <strong>Post ID:</strong> ${post.id}
+                            </div>
+                            <div class="post-body">
+                                ${this.escapeHtml(post.body)}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            renderTodos(todos) {
+                const container = document.getElementById('todos-list');
+                if (!container) return;
+
+                container.innerHTML = todos.map(todo => `
+                    <div class="data-item todo-item ${todo.completed ? 'completed' : 'pending'}">
+                        <h4>${this.escapeHtml(todo.title)}</h4>
+                        <p>
+                            <span class="status ${todo.completed ? 'completed' : 'pending'}">
+                                ${todo.completed ? 'Completed' : 'Pending'}
+                            </span>
+                        </p>
+                        <p><strong>User ID:</strong> ${todo.userId} | <strong>Todo ID:</strong> ${todo.id}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Main Application Class
+        class App {
+            constructor() {
+                this.apiService = new ApiService();
+                this.uiManager = new UIManager();
+                this.currentSection = 'users';
+                this.data = {
+                    users: [],
+                    posts: [],
+                    todos: []
+                };
+            }
+
+            async init() {
+                this.setupEventListeners();
+                await this.loadInitialData();
+            }
+
+            setupEventListeners() {
+                // Navigation buttons
+                const navButtons = document.querySelectorAll('.nav-btn');
+                navButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const targetSection = e.target.id.replace('-btn', '');
+                        this.handleNavigation(targetSection);
+                    });
+                });
+
+                // User filter for posts
+                const userFilter = document.getElementById('user-filter');
+                if (userFilter) {
+                    userFilter.addEventListener('change', (e) => {
+                        this.handleUserFilter(e);
+                    });
+                }
+
+                // Todo filter
+                const todoFilter = document.getElementById('todo-filter');
+                if (todoFilter) {
+                    todoFilter.addEventListener('change', (e) => {
+                        this.handleTodoFilter(e);
+                    });
+                }
+            }
+
+            async handleNavigation(targetSection) {
+                if (targetSection === this.currentSection) return;
+
+                this.uiManager.setActiveSection(targetSection);
+                this.currentSection = targetSection;
+                await this.loadSectionData(targetSection);
+            }
+
+            async loadInitialData() {
+                await this.loadSectionData('users');
+            }
+
+            async loadSectionData(section) {
+                this.uiManager.showLoading();
+
+                try {
+                    switch (section) {
+                        case 'users':
+                            await this.loadUsers();
+                            break;
+                        case 'posts':
+                            await this.loadPosts();
+                            break;
+                        case 'todos':
+                            await this.loadTodos();
+                            break;
+                    }
+                } catch (error) {
+                    this.uiManager.showError(`Failed to load ${section}: ${error.message}`);
+                } finally {
+                    this.uiManager.hideLoading();
+                }
+            }
+
+            async loadUsers() {
+                if (this.data.users.length === 0) {
+                    this.data.users = await this.apiService.getUsers();
+                }
+                this.uiManager.renderUsers(this.data.users);
+            }
+
+            async loadPosts() {
+                if (this.data.posts.length === 0) {
+                    this.data.posts = await this.apiService.getPosts();
+                }
+                if (this.data.users.length === 0) {
+                    this.data.users = await this.apiService.getUsers();
+                }
+                this.uiManager.populateUserFilter(this.data.users);
+                this.uiManager.renderPosts(this.data.posts, this.data.users);
+            }
+
+            async loadTodos() {
+                if (this.data.todos.length === 0) {
+                    this.data.todos = await this.apiService.getTodos();
+                }
+                this.uiManager.renderTodos(this.data.todos);
+            }
+
+            handleUserFilter(event) {
+                const userId = event.target.value;
+                const filteredPosts = userId
+                    ? this.data.posts.filter(post => post.userId === parseInt(userId, 10))
+                    : this.data.posts;
+                this.uiManager.renderPosts(filteredPosts, this.data.users);
+            }
+
+            handleTodoFilter(event) {
+                const filter = event.target.value;
+                let filteredTodos = this.data.todos;
+
+                if (filter === 'completed') {
+                    filteredTodos = this.data.todos.filter(todo => todo.completed);
+                } else if (filter === 'pending') {
+                    filteredTodos = this.data.todos.filter(todo => !todo.completed);
+                }
+
+                this.uiManager.renderTodos(filteredTodos);
+            }
+        }
+
+        // Initialize the application when DOM is ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            const app = new App();
+            await app.init();
+        });
+    </script>
+</body>
+
+</html>
