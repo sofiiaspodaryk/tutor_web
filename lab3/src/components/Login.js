@@ -84,40 +84,19 @@ function Login() {
                 </div>
 
                 <div className="demo-accounts">
-                    <h3>Demo Accounts:</h3>
-                    <div className="demo-account">
-                        <strong>Admin:</strong>
-                        {' '}
-                        username:
-                        {' '}
-                        <code>admin</code>
-                        {' '}
-                        / password:
-                        {' '}
-                        <code>admin</code>
-                    </div>
-                    <div className="demo-account">
-                        <strong>User:</strong>
-                        {' '}
-                        username:
-                        {' '}
-                        <code>user1</code>
-                        {' '}
-                        / password:
-                        {' '}
-                        <code>password1</code>
-                    </div>
-                    <div className="demo-account">
-                        <strong>Manager:</strong>
-                        {' '}
-                        username:
-                        {' '}
-                        <code>manager1</code>
-                        {' '}
-                        / password:
-                        {' '}
-                        <code>manager123</code>
-                    </div>
+                  <h3>Demo Accounts:</h3>
+                  <div className="demo-account">
+                    <strong>Admin:</strong> username: <code>admin</code> / password: <code>admin</code>
+                  </div>
+                  <div className="demo-account">
+                    <strong>Manager:</strong> username: <code>manager1</code> / password: <code>manager123</code>
+                  </div>
+                  <div className="demo-account">
+                    <strong>Student:</strong> username: <code>student1</code> / password: <code>student123</code>
+                  </div>
+                  <div className="demo-account">
+                    <strong>Tutor:</strong> username: <code>tutor1</code> / password: <code>tutor123</code>
+                  </div>
                 </div>
             </div>
         </div>

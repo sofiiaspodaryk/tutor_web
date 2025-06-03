@@ -1,12 +1,13 @@
 export const ROLES = {
     ADMIN: 'admin',
-    USER: 'user',
     MANAGER: 'manager',
+    STUDENT: 'student',
+    TUTOR: 'tutor',
 };
 
 export const mockUsers = [
     {
-        id: 1,
+        id: 0,
         username: 'admin',
         password: 'admin',
         email: 'admin@example.com',
@@ -14,36 +15,28 @@ export const mockUsers = [
         createdAt: '2024-01-01T00:00:00.000Z',
     },
     {
-        id: 2,
-        username: 'user1',
-        password: 'password1',
-        email: 'user1@example.com',
-        role: ROLES.USER,
-        createdAt: '2024-01-02T00:00:00.000Z',
-    },
-    {
-        id: 3,
+        id: 1,
         username: 'manager1',
         password: 'manager123',
         email: 'manager1@example.com',
         role: ROLES.MANAGER,
+        createdAt: '2024-01-01T00:00:00.000Z',
+    },
+    {
+        id: 2,
+        username: 'student1',
+        password: 'student123',
+        email: 'student1@example.com',
+        role: ROLES.STUDENT,
+        createdAt: '2024-01-02T00:00:00.000Z',
+    },
+    {
+        id: 3,
+        username: 'tutor1',
+        password: 'tutor123',
+        email: 'tutor1@example.com',
+        role: ROLES.TUTOR,
         createdAt: '2024-01-03T00:00:00.000Z',
-    },
-    {
-        id: 4,
-        username: 'john_doe',
-        password: 'johndoe123',
-        email: 'john.doe@example.com',
-        role: ROLES.USER,
-        createdAt: '2024-01-04T00:00:00.000Z',
-    },
-    {
-        id: 5,
-        username: 'jane_smith',
-        password: 'janesmith456',
-        email: 'jane.smith@example.com',
-        role: ROLES.USER,
-        createdAt: '2024-01-05T00:00:00.000Z',
     },
 ];
 
