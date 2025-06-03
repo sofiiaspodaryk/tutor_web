@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function, react/jsx-no-constructed-context-values */
 import React, {
     createContext, useContext, useState, useEffect, useMemo,
 } from 'react';
@@ -74,7 +73,7 @@ export function AuthProvider({ children }) {
 
     const register = async (userData) => {
         const {
-            username, password, email, role = ROLES.USER,
+            username, password, email, role = ROLES.STUDENT,
         } = userData;
 
         // Simulate API call delay

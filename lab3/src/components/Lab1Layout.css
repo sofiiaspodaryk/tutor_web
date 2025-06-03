@@ -1,0 +1,85 @@
+.lab1-container {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.lab1-nav {
+    width: 220px;
+    background: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.lab1-nav h2 {
+    margin-top: 0;
+}
+
+.lab1-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.lab1-nav li {
+    margin: 10px 0;
+}
+
+.lab1-nav a {
+    text-decoration: none;
+    color: #333;
+}
+
+.lab1-nav a.active {
+    font-weight: bold;
+    color: #0078d4;
+}
+
+.lab1-main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #fff;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table th {
+    background: #0078d4;
+    color: #fff;
+}
+
+button {
+    margin: 5px;
+    padding: 6px 12px;
+    background: #0078d4;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background: #005fa3;
+}
+
+input,
+select {
+    padding: 6px;
+    margin: 4px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form div {
+    margin-bottom: 10px;
+}

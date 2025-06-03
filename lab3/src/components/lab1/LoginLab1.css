@@ -1,0 +1,33 @@
+.login-lab1-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+.login-lab1-container h2 {
+    margin-bottom: 10px;
+    color: #0078d4;
+}
+
+.login-lab1-container p {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-lab1-container button {
+    padding: 10px 20px;
+    background: #0078d4;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.login-lab1-container button:hover {
+    background: #005fa3;
+}
