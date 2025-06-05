@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLab1Data } from '../../context/Lab1DataContext';
+import PropTypes from 'prop-types';
 
 function EditUser() {
     const { id } = useParams();
+    const safeId = id || '';
     const { users, updateUser } = useLab1Data();
     const navigate = useNavigate();
     const [form, setForm] = useState({
@@ -17,7 +19,7 @@ function EditUser() {
     const [userNotFound, setUserNotFound] = useState(false);
 
     useEffect(() => {
-        const user = users.find((u) => u.id === id);
+        const user = users.find((u) => u.id === safeId);
         if (user) {
             setForm({
                 name: user.name || '',
@@ -208,5 +210,10 @@ function EditUser() {
         </div>
     );
 }
+
+EditUser.propTypes = {
+    users: PropTypes.array.isRequired,
+    updateUser: PropTypes.func.isRequired,
+};
 
 export default EditUser;

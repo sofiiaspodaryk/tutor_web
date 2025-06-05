@@ -256,11 +256,12 @@ function Payment() {
                     <form onSubmit={handleSubmit} className="user-form">
                         <div className="form-row">
                             <div className="form-group">
-                                <label className="form-label">
+                                <label htmlFor="userId" className="form-label">
                                     <span className="input-icon">👤</span>
                                     Student/User *
                                 </label>
                                 <select
+                                    id="userId"
                                     name="userId"
                                     value={form.userId}
                                     onChange={handleChange}
@@ -278,11 +279,12 @@ function Payment() {
                             </div>
 
                             <div className="form-group">
-                                <label className="form-label">
+                                <label htmlFor="amount" className="form-label">
                                     <span className="input-icon">💵</span>
                                     Amount (USD) *
                                 </label>
                                 <input
+                                    id="amount"
                                     name="amount"
                                     type="number"
                                     step="0.01"
@@ -349,11 +351,12 @@ function Payment() {
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label className="form-label">
+                                <label className="form-label" htmlFor="date">
                                     <span className="input-icon">📅</span>
                                     Payment Date *
                                 </label>
                                 <input
+                                    id="date"
                                     name="date"
                                     type="date"
                                     value={form.date}
@@ -385,11 +388,12 @@ function Payment() {
 
                         <div className="form-row">
                             <div className="form-group full-width">
-                                <label className="form-label">
+                                <label htmlFor="description" className="form-label">
                                     <span className="input-icon">📝</span>
                                     Description/Notes
                                 </label>
                                 <textarea
+                                    id="description"
                                     name="description"
                                     value={form.description}
                                     onChange={handleChange}

@@ -190,11 +190,12 @@ function Tests() {
                     <form onSubmit={handleSubmit} className="user-form">
                         <div className="form-row">
                             <div className="form-group">
-                                <label className="form-label">
+                                <label htmlFor="userId" className="form-label">
                                     <span className="input-icon">👨‍🎓</span>
                                     Student *
                                 </label>
                                 <select
+                                    id="userId"
                                     name="userId"
                                     value={form.userId}
                                     onChange={handleChange}
@@ -210,11 +211,12 @@ function Tests() {
                             </div>
 
                             <div className="form-group">
-                                <label className="form-label">
+                                <label htmlFor="subject" className="form-label">
                                     <span className="input-icon">📚</span>
                                     Subject *
                                 </label>
                                 <input
+                                    id="subject"
                                     name="subject"
                                     type="text"
                                     value={form.subject}
@@ -273,11 +275,12 @@ function Tests() {
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label className="form-label">
+                                <label htmlFor="date" className="form-label">
                                     <span className="input-icon">📅</span>
                                     Test Date *
                                 </label>
                                 <input
+                                    id="date"
                                     name="date"
                                     type="date"
                                     value={form.date}
