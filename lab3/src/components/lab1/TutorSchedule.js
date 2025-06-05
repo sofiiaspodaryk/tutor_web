@@ -46,19 +46,19 @@ function TutorSchedule() {
             <button onClick={resetForm}>Add Schedule</button>
             <form onSubmit={handleSubmit} style={{ marginTop: '10px' }}>
                 <div>
-                    <label>Tutor:</label>
-                    <select name="tutorId" value={form.tutorId} onChange={handleChange} required>
+                    <label htmlFor="tutorId">Tutor:</label>
+                    <select id="tutorId" name="tutorId" value={form.tutorId} onChange={handleChange} required>
                         <option value="">--Select--</option>
                         {tutors.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
                     </select>
                 </div>
                 <div>
-                    <label>Date:</label>
-                    <input name="date" type="date" value={form.date} onChange={handleChange} required />
+                    <label htmlFor="date">Date:</label>
+                    <input id="date" name="date" type="date" value={form.date} onChange={handleChange} required />
                 </div>
                 <div>
-                    <label>Topic:</label>
-                    <input name="topic" value={form.topic} onChange={handleChange} required />
+                    <label htmlFor="topic">Topic:</label>
+                    <input id="topic" name="topic" value={form.topic} onChange={handleChange} required />
                 </div>
                 <button type="submit">{editing ? 'Update' : 'Create'}</button>
                 {editing && <button type="button" onClick={resetForm} style={{ marginLeft: '10px' }}>Cancel</button>}

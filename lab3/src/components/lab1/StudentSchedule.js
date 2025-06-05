@@ -46,19 +46,19 @@ function StudentSchedule() {
             <button onClick={resetForm}>Add Schedule</button>
             <form onSubmit={handleSubmit} style={{ marginTop: '10px' }}>
                 <div>
-                    <label>User:</label>
-                    <select name="userId" value={form.userId} onChange={handleChange} required>
+                    <label htmlFor="userId">User:</label>
+                    <select id="userId" name="userId" value={form.userId} onChange={handleChange} required>
                         <option value="">--Select--</option>
                         {users.map((u) => <option key={u.id} value={u.id}>{u.name}</option>)}
                     </select>
                 </div>
                 <div>
-                    <label>Date:</label>
-                    <input name="date" type="date" value={form.date} onChange={handleChange} required />
+                    <label htmlFor="date">Date:</label>
+                    <input id="date" name="date" type="date" value={form.date} onChange={handleChange} required />
                 </div>
                 <div>
-                    <label>Topic:</label>
-                    <input name="topic" value={form.topic} onChange={handleChange} required />
+                    <label htmlFor="topic">Topic:</label>
+                    <input id="topic" name="topic" value={form.topic} onChange={handleChange} required />
                 </div>
                 <button type="submit">{editing ? 'Update' : 'Create'}</button>
                 {editing && <button type="button" onClick={resetForm} style={{ marginLeft: '10px' }}>Cancel</button>}

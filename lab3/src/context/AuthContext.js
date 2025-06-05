@@ -103,6 +103,19 @@ export function AuthProvider({ children }) {
         // Add to mock data (in real app, this would be sent to backend)
         mockUsers.push(newUser);
 
+        // Auto-login the user after successful registration
+        const userSession = {
+            id: newUser.id,
+            username: newUser.username,
+            role: newUser.role,
+            email: newUser.email,
+            createdAt: newUser.createdAt,
+        };
+
+        setCurrentUser(userSession);
+        setIsAuthenticated(true);
+        localStorage.setItem('currentUser', JSON.stringify(userSession));
+
         return newUser;
     };
 
@@ -114,6 +127,7 @@ export function AuthProvider({ children }) {
     const isAdmin = () => hasRole(ROLES.ADMIN);
 
     const value = useMemo(() => ({
+        user: currentUser,
         currentUser,
         isAuthenticated,
         isLoading,
